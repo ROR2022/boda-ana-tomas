@@ -1,14 +1,15 @@
 // 👨‍👩‍👧‍👦 ParentsSection - Sección de información de padres
 
-import React, {useState, useEffect, useRef, useCallback} from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 //import Image from "next/image";
 import { quinceMainData } from "@/components/sections/data/main-data";
 
 export default function ParentsSection() {
   //const { parents } = weddingData;
-  const { brideParents, groomParents, parents } = quinceMainData.event;
+  const { brideParents, groomParents, parents, padrinosList } =
+    quinceMainData.event;
   const sectionRef = useRef(null);
-  
+
   // Estados para animaciones escalonadas
   const [isInView, setIsInView] = useState(false);
   const [messageVisible, setMessageVisible] = useState(false);
@@ -36,7 +37,7 @@ export default function ParentsSection() {
         },
         {
           threshold: 0.3,
-          rootMargin: '-50px 0px'
+          rootMargin: "-50px 0px",
         }
       );
 
@@ -51,32 +52,41 @@ export default function ParentsSection() {
   useIntersectionObserver();
 
   // Función helper para clases de animación
-  const getAnimationClass = (isVisible, animationType, delay = '') => {
-    const baseClass = 'animate-on-scroll';
-    const animClass = isVisible ? `animate-${animationType} ${delay}` : '';
+  const getAnimationClass = (isVisible, animationType, delay = "") => {
+    const baseClass = "animate-on-scroll";
+    const animClass = isVisible ? `animate-${animationType} ${delay}` : "";
     return `${baseClass} ${animClass}`.trim();
   };
-  
-  const basicClass="font-main-text text-5xl text-indigo-500 mb-4";
-  const completeClass="font-main-text text-5xl text-indigo-500 mb-4 scale-up-center";
-  
+
+  const basicClass = "font-main-text text-5xl text-indigo-500 mb-4";
+  const completeClass =
+    "font-main-text text-5xl text-indigo-500 mb-4 scale-up-center";
+
+  const uniquekey = () => {
+    return (
+      Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15)
+    );
+  };
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       style={{
         backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${parents.backgroundImage}')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        position: 'relative',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        position: "relative",
       }}
-      id="parents" 
-      className={`py-20 bg-muted/30 ${isInView ? 'bg-parallax' : ''}`}
+      id="parents"
+      className={`py-20 bg-muted/30 ${isInView ? "bg-parallax" : ""}`}
     >
       {/* Elementos decorativos flotantes */}
       <div className="decorative-element top-10 left-10 animate-float delay-200">
-        <span className="text-2xl heart-icon animate-sparkle delay-500">💖</span>
+        <span className="text-2xl heart-icon animate-sparkle delay-500">
+          💖
+        </span>
       </div>
       <div className="decorative-element top-20 right-16 animate-float delay-700">
         <span className="text-xl star-icon animate-sparkle delay-300">✨</span>
@@ -91,37 +101,52 @@ export default function ParentsSection() {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="relative">
-            
             <div className="relative p-6 rounded-2xl z-10 text-center space-y-8 py-12 text-white">
-              
               {/* Mensaje principal con animación */}
-              <div className={getAnimationClass(messageVisible, 'fade-in-up', 'delay-200')}>
+              <div
+                className={getAnimationClass(
+                  messageVisible,
+                  "fade-in-up",
+                  "delay-200"
+                )}
+              >
                 <p className="text-lg italic max-w-2xl mx-auto leading-relaxed text-glow">
                   {parents.message}
                 </p>
               </div>
 
               <div className="space-y-8">
-                
                 {/* Card de Padres */}
-                <div className={`${getAnimationClass(parentsVisible, 'slide-in-left', 'delay-400')} parent-card`}>
+                <div
+                  className={`${getAnimationClass(
+                    parentsVisible,
+                    "slide-in-left",
+                    "delay-400"
+                  )} parent-card`}
+                >
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:border-white/40 transition-all duration-300">
                     <div className="flex items-center justify-center mb-4">
-                      <span className="text-3xl animate-heart-beat mr-2">👨‍👩‍👧</span>
-                      <h3 className={parentsVisible ? completeClass : basicClass}>
+                      <span className="text-3xl animate-heart-beat mr-2">
+                        👨‍👩‍👧
+                      </span>
+                      <h3
+                        className={parentsVisible ? completeClass : basicClass}
+                      >
                         Padres de la Novia
                       </h3>
-                      <span className="text-3xl animate-heart-beat ml-2">👨‍👩‍👧</span>
+                      <span className="text-3xl animate-heart-beat ml-2">
+                        👨‍👩‍👧
+                      </span>
                     </div>
                     <div className="space-y-3">
                       <div className="flex items-center justify-center space-x-2">
-                        <span className="text-lg">👨</span>
+                        <span className="text-lg">👩</span>
                         <p className="text-xl font-medium text-glow">
                           {brideParents.mother}
                         </p>
                       </div>
                       <div className="flex items-center justify-center space-x-2">
-                        <span className="text-lg">👩</span>
+                        <span className="text-lg">👨</span>
                         <p className="text-xl font-medium text-glow">
                           {brideParents.father}
                         </p>
@@ -130,25 +155,39 @@ export default function ParentsSection() {
                   </div>
                 </div>
 
-                {/* Card de Padrinos */}
-                <div className={`${getAnimationClass(godparentsVisible, 'slide-in-right', 'delay-600')} parent-card`}>
+                {/* Card de Padres del Novio */}
+                <div
+                  className={`${getAnimationClass(
+                    godparentsVisible,
+                    "slide-in-right",
+                    "delay-600"
+                  )} parent-card`}
+                >
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:border-white/40 transition-all duration-300">
                     <div className="flex items-center justify-center mb-4">
-                      <span className="text-3xl animate-heart-beat mr-2">🤝</span>
-                      <h3 className={godparentsVisible ? completeClass : basicClass}>
+                      <span className="text-3xl animate-heart-beat mr-2">
+                        🤝
+                      </span>
+                      <h3
+                        className={
+                          godparentsVisible ? completeClass : basicClass
+                        }
+                      >
                         Padres del Novio
                       </h3>
-                      <span className="text-3xl animate-heart-beat ml-2">🤝</span>
+                      <span className="text-3xl animate-heart-beat ml-2">
+                        🤝
+                      </span>
                     </div>
                     <div className="space-y-3">
                       <div className="flex items-center justify-center space-x-2">
-                        <span className="text-lg">🤵</span>
+                        <span className="text-lg">👩</span>
                         <p className="text-xl font-medium text-glow">
                           {groomParents.mother}
                         </p>
                       </div>
                       <div className="flex items-center justify-center space-x-2">
-                        <span className="text-lg">👰</span>
+                        <span className="text-lg">👨</span>
                         <p className="text-xl font-medium text-glow">
                           {groomParents.father}
                         </p>
@@ -156,7 +195,52 @@ export default function ParentsSection() {
                     </div>
                   </div>
                 </div>
-                
+
+                {/* Card de Padrinos */}
+                <div
+                  className={`${getAnimationClass(
+                    godparentsVisible,
+                    "slide-in-right",
+                    "delay-600"
+                  )} parent-card`}
+                >
+                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:border-white/40 transition-all duration-300">
+                    <div className="flex items-center justify-center mb-4">
+                      <span className="text-3xl animate-heart-beat mr-2">
+                        🤝
+                      </span>
+                      <h3
+                        className={
+                          godparentsVisible ? completeClass : basicClass
+                        }
+                      >
+                        Nuestros Padrinos
+                      </h3>
+                      <span className="text-3xl animate-heart-beat ml-2">
+                        🤝
+                      </span>
+                    </div>
+                    {padrinosList.map((item) => {
+                      return (
+                        <div key={uniquekey()} className="space-y-3">
+                          <h4 className="mt-4 text-2xl text-amber-500">{item.role}</h4>
+                          <div className="flex items-center justify-center space-x-2">
+                            
+                            <p className="text-xl font-medium text-glow">
+                              {item.madrina}
+                            </p>
+                          </div>
+                          <div className="flex items-center justify-center space-x-2">
+                            
+                            <p className="text-xl font-medium text-glow">
+                              {item.padrino}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

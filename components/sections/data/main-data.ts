@@ -32,7 +32,6 @@ export const quinceMainData = {
       father: "Isaías Romero Najera (+)",
       mother: "Gloria Cordova Calderón",
     },
-    //Papás Andres Martínez y Maria de Jesús Sanchez
     parents: {
       father: "Andres Martínez",
       mother: "Maria de Jesús Sanchez",
@@ -43,11 +42,37 @@ export const quinceMainData = {
       `,
       backgroundImage: "/images/orquideas4.jpg",
     },
-    //Padrino Ma. Asunción Ramirez y Juan Gutiérrez
     godparents: {
       godfather: "Juan Hernández",
       godmother: "Ma. Asunción Jiménez",
     },
+    padrinosList: [
+      {
+        padrino: "Juan Gabriel Osorio De La Cruz",
+        madrina: "Juana María Domínguez Osorio",
+        role: "Padrinos de Velación",
+      },
+      {
+        padrino: "Manuel Antonio Domínguez Osorio",
+        madrina: "Guadalupe Hernández Almeida",
+        role: "Padrinos de Arras",
+      },
+      {
+        padrino: "Gerardo Rafael Romero Izquierdo",
+        madrina: "Lizbeth Dominguez Naranjo",
+        role: "Padrinos de Anillos",
+      },
+      {
+        padrino: "Manuel López Gil",
+        madrina: "Cinthia Karely Broca Izquierdo",
+        role: "Padrinos de Lazo",
+      },
+      {
+        padrino: "Eduardo Arturo Vazquez Galvez",
+        madrina: "Sara Acosta Diaz",
+        role: "Padrinos de Brindis",
+      }
+    ],
     date: {
       full: "Sábado 29 de Noviembre 2025",
       isoDate: "2025-11-29T18:00:00",
@@ -80,7 +105,7 @@ export const quinceMainData = {
       type: "Recepción",
       ubiLink: "https://maps.app.goo.gl/5gpy4d9ei2cZrkat6",
     },
-    dressCode: "Formal - Blanco solo la novia -",
+    dressCode: "Formal - Blanco solo la novia, Verde damas de honor -",
     restrictions: "",
   },
   timeline: {
@@ -130,7 +155,7 @@ export const quinceMainData = {
   dressCode: {
     title: "Código de Vestimenta",
     message: "¡Vístete para impresionar!",
-    subtitle: "Código de vestimenta formal - Blanco solo la novia",
+    subtitle: "Código de vestimenta formal - Blanco solo la novia, Verde damas de honor",
     restriction: "Restricción: No niños",
     backgroundImage: "/images/dressCode1.png",
   },
@@ -139,7 +164,7 @@ export const quinceMainData = {
     backgroundImage: "/images/countdown-bg.jpg",
   },
   attendance: {
-    whatsappNumber: "5217777937484",
+    whatsappNumber: "5219331069374", //+52 1 933 106 9374
     title: "CONFIRMACIÓN DE ASISTENCIA",
     message: "Respetuosamente",
     subtitle: "Confirmar antes del evento.",
