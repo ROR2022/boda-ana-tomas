@@ -10,34 +10,28 @@ export default function ParentsSection() {
     quinceMainData.event;
   const sectionRef = useRef(null);
 
-  // Estados para animaciones escalonadas
+  // Estados para animaciones escalonadas - Contenido siempre visible
   const [isInView, setIsInView] = useState(false);
-  const [messageVisible, setMessageVisible] = useState(false);
-  const [parentsVisible, setParentsVisible] = useState(false);
-  const [godparentsVisible, setGodparentsVisible] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const [messageVisible, setMessageVisible] = useState(true);
+  const [parentsVisible, setParentsVisible] = useState(true);
+  const [godparentsVisible, setGodparentsVisible] = useState(true);
 
-  // Hook personalizado para IntersectionObserver
+  // Hook personalizado para IntersectionObserver - Mejora progresiva
   const useIntersectionObserver = useCallback(() => {
     useEffect(() => {
       const observer = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) {
+          if (entry.isIntersecting && !hasAnimated) {
             setIsInView(true);
-            // Secuencia de animaciones escalonadas
-            setTimeout(() => setMessageVisible(true), 300);
-            setTimeout(() => setParentsVisible(true), 700);
-            setTimeout(() => setGodparentsVisible(true), 1100);
-          } else {
-            // Reset cuando sale de vista
-            setIsInView(false);
-            setMessageVisible(false);
-            setParentsVisible(false);
-            setGodparentsVisible(false);
+            setHasAnimated(true);
+            // Las animaciones son opcionales - el contenido ya es visible
+            // Solo agregamos efectos visuales sutiles
           }
         },
         {
-          threshold: 0.3,
-          rootMargin: "-50px 0px",
+          threshold: 0.1, // Más permisivo
+          rootMargin: "0px", // Sin margen restrictivo
         }
       );
 
@@ -46,21 +40,21 @@ export default function ParentsSection() {
       }
 
       return () => observer.disconnect();
-    }, []);
-  }, []);
+    }, [hasAnimated]);
+  }, [hasAnimated]);
 
   useIntersectionObserver();
 
-  // Función helper para clases de animación
+  // Función helper para clases de animación - Contenido siempre visible
   const getAnimationClass = (isVisible, animationType, delay = "") => {
-    const baseClass = "animate-on-scroll";
-    const animClass = isVisible ? `animate-${animationType} ${delay}` : "";
+    const baseClass = "opacity-100 transform translate-y-0 transition-all duration-500";
+    const animClass = hasAnimated && isVisible ? `animate-${animationType} ${delay}` : "";
     return `${baseClass} ${animClass}`.trim();
   };
 
-  const basicClass = "font-main-text text-5xl text-indigo-500 mb-4";
+  const basicClass = "font-main-text text-5xl text-indigo-500 mb-4 opacity-100 transform scale-100 transition-transform duration-300";
   const completeClass =
-    "font-main-text text-5xl text-indigo-500 mb-4 scale-up-center";
+    "font-main-text text-5xl text-indigo-500 mb-4 opacity-100 transform scale-100 transition-transform duration-300 hover:scale-105";
 
   const uniquekey = () => {
     return (
@@ -80,7 +74,7 @@ export default function ParentsSection() {
         position: "relative",
       }}
       id="parents"
-      className={`py-20 bg-muted/30 ${isInView ? "bg-parallax" : ""}`}
+      className={`py-20 bg-muted/30 ${hasAnimated ? "bg-parallax" : ""}`}
     >
       {/* Elementos decorativos flotantes */}
       <div className="decorative-element top-10 left-10 animate-float delay-200">
@@ -102,13 +96,11 @@ export default function ParentsSection() {
         <div className="max-w-4xl mx-auto">
           <div className="relative">
             <div className="relative p-6 rounded-2xl z-10 text-center space-y-8 py-12 text-white">
-              {/* Mensaje principal con animación */}
+              {/* Mensaje principal - Siempre visible */}
               <div
-                className={getAnimationClass(
-                  messageVisible,
-                  "fade-in-up",
-                  "delay-200"
-                )}
+                className={`opacity-100 transform translate-y-0 transition-all duration-500 ${
+                  hasAnimated ? "animate-pulse-subtle" : ""
+                }`}
               >
                 <p className="text-lg italic max-w-2xl mx-auto leading-relaxed text-glow">
                   {parents.message}
@@ -116,13 +108,11 @@ export default function ParentsSection() {
               </div>
 
               <div className="space-y-8">
-                {/* Card de Padres */}
+                {/* Card de Padres - Siempre visible */}
                 <div
-                  className={`${getAnimationClass(
-                    parentsVisible,
-                    "slide-in-left",
-                    "delay-400"
-                  )} parent-card`}
+                  className={`opacity-100 transform translate-x-0 transition-all duration-500 parent-card ${
+                    hasAnimated ? "hover:translate-x-1" : ""
+                  }`}
                 >
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:border-white/40 transition-all duration-300">
                     <div className="flex items-center justify-center mb-4">
@@ -130,7 +120,7 @@ export default function ParentsSection() {
                         👨‍👩‍👧
                       </span>
                       <h3
-                        className={parentsVisible ? completeClass : basicClass}
+                        className={hasAnimated ? completeClass : basicClass}
                       >
                         Padres de la Novia
                       </h3>
@@ -155,13 +145,11 @@ export default function ParentsSection() {
                   </div>
                 </div>
 
-                {/* Card de Padres del Novio */}
+                {/* Card de Padres del Novio - Siempre visible */}
                 <div
-                  className={`${getAnimationClass(
-                    godparentsVisible,
-                    "slide-in-right",
-                    "delay-600"
-                  )} parent-card`}
+                  className={`opacity-100 transform translate-x-0 transition-all duration-500 parent-card ${
+                    hasAnimated ? "hover:translate-x-1" : ""
+                  }`}
                 >
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:border-white/40 transition-all duration-300">
                     <div className="flex items-center justify-center mb-4">
@@ -169,9 +157,7 @@ export default function ParentsSection() {
                         🤝
                       </span>
                       <h3
-                        className={
-                          godparentsVisible ? completeClass : basicClass
-                        }
+                        className={hasAnimated ? completeClass : basicClass}
                       >
                         Padres del Novio
                       </h3>
@@ -196,13 +182,11 @@ export default function ParentsSection() {
                   </div>
                 </div>
 
-                {/* Card de Padrinos */}
+                {/* Card de Padrinos - Siempre visible */}
                 <div
-                  className={`${getAnimationClass(
-                    godparentsVisible,
-                    "slide-in-right",
-                    "delay-600"
-                  )} parent-card`}
+                  className={`opacity-100 transform translate-x-0 transition-all duration-500 parent-card ${
+                    hasAnimated ? "hover:translate-x-1" : ""
+                  }`}
                 >
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:border-white/40 transition-all duration-300">
                     <div className="flex items-center justify-center mb-4">
@@ -210,9 +194,7 @@ export default function ParentsSection() {
                         🤝
                       </span>
                       <h3
-                        className={
-                          godparentsVisible ? completeClass : basicClass
-                        }
+                        className={hasAnimated ? completeClass : basicClass}
                       >
                         Nuestros Padrinos
                       </h3>
