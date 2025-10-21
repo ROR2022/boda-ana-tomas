@@ -3,7 +3,7 @@
 // ================================================================
 
 import { FormData, ValidationResult } from '../types/invitation.types';
-import { EVENT_INFO, VALIDATION_MESSAGES, PHONE_CONFIG } from '../constants/invitation.constants';
+import { EVENT_INFO, VALIDATION_MESSAGES, PHONE_CONFIG, TABLE_CONFIG } from '../constants/invitation.constants';
 import "../../../../utils/logInterceptor";
 
 /**
@@ -81,7 +81,7 @@ Tienes una invitación especial a ${EVENT_INFO.partyTitle} de:
 📅 Fecha: ${EVENT_INFO.date}
 🕖 Hora: ${EVENT_INFO.time}
 📍 Lugar: ${EVENT_INFO.venue}
-👥 Número de invitados: ${formData.numberOfGuests} ${guestText}
+👥 Número de invitados: ${formData.numberOfGuests} ${guestText}${formData.tableNumber ? `\n${TABLE_CONFIG.ICON} Mesa asignada: ${formData.tableNumber}` : ''}
 
 Ver tu invitación mágica aquí:
 👉 ${personalizedUrl}
@@ -376,6 +376,7 @@ export const createOrUpdateGuestFromInvitation = async (formData: FormData): Pro
       name: formData.guestName.trim(),
       phone: cleanPhone, // Solo números
       relation: mappedRelation,
+      tableNumber: formData.tableNumber ? parseInt(formData.tableNumber) : null, // 🆕 Mesa opcional
       personalInvitation: {
         sent: true,
         sentAt: new Date(),
@@ -390,6 +391,8 @@ export const createOrUpdateGuestFromInvitation = async (formData: FormData): Pro
       phoneLength: guestData.phone.length,
       relation: guestData.relation,
       originalRelation: formData.guestRelation,
+      tableNumber: guestData.tableNumber,
+      hasTable: !!guestData.tableNumber,
       numberOfGuests: guestData.personalInvitation.numberOfGuests,
       messageLength: guestData.personalInvitation.message.length
     });

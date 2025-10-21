@@ -4,7 +4,7 @@
 
 import React, { forwardRef } from 'react';
 import { InvitationPreviewProps } from '../types/invitation.types';
-import { EVENT_INFO } from '../constants/invitation.constants';
+import { EVENT_INFO, TABLE_CONFIG } from '../constants/invitation.constants';
 
 /**
  * Componente de vista previa de la invitación
@@ -34,6 +34,9 @@ export const InvitationPreview = forwardRef<HTMLDivElement, InvitationPreviewPro
               <p>🕖 <strong>Hora:</strong> {EVENT_INFO.time}</p>
               <p>📍 <strong>Lugar:</strong> {EVENT_INFO.venue}</p>
               <p>👥 <strong>Invitados:</strong> {formData.numberOfGuests} {parseInt(formData.numberOfGuests) === 1 ? 'persona' : 'personas'}</p>
+              {formData.tableNumber && (
+                <p>{TABLE_CONFIG.ICON} <strong>Mesa:</strong> {formData.tableNumber}</p>
+              )}
             </div>
           </div>
           <div className="mt-4 p-3 bg-white/20 rounded-lg">

@@ -5,6 +5,7 @@ export interface Guest {
   name: string;
   phone?: string;
   relation: 'familia' | 'amigos' | 'escuela' | 'trabajo' | 'otros';
+  tableNumber?: number; // 🆕 NUEVO CAMPO - Número de mesa opcional
   
   personalInvitation?: {
     sent: boolean;
@@ -74,6 +75,7 @@ export interface GuestFormData {
   name: string;
   phone: string;
   relation: 'familia' | 'amigos' | 'escuela' | 'trabajo' | 'otros';
+  tableNumber?: number; // 🆕 NUEVO CAMPO - Número de mesa opcional
 }
 
 export interface PaginationInfo {
@@ -146,4 +148,14 @@ export const STATUS_COLORS = {
     border: '#ef4444',
     text: '#dc2626'
   }
+} as const;
+
+// 🆕 Configuración de mesas (reutilizada de CustomInvitations)
+export const TABLE_CONFIG = {
+  MIN_TABLE: 1,
+  MAX_TABLE: 20,
+  ICON: '🪑',
+  DEFAULT_LABEL: "Sin mesa asignada",
+  SHOW_IN_CARDS: true,
+  SHOW_IN_TABLE: true
 } as const;

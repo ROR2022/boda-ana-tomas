@@ -1,6 +1,6 @@
 import React from 'react';
 import { Phone, Calendar, Users, Edit, Trash2, Eye, CheckCircle, Clock, Send } from 'lucide-react';
-import { Guest, STATUS_COLORS } from '../types/guests.types';
+import { Guest, STATUS_COLORS, TABLE_CONFIG } from '../types/guests.types';
 
 interface GuestCardProps {
   guest: Guest;
@@ -132,6 +132,20 @@ const GuestCard: React.FC<GuestCardProps> = ({
             </span>
           </div>
         </div>
+
+        {/* Número de Mesa */}
+        {guest.tableNumber && (
+          <div className="flex items-center gap-3">
+            <div 
+              className="p-1 rounded-md"
+              style={{ backgroundColor: 'rgba(59, 130, 246, 0.1)' }}
+            >
+              <span className="text-xs font-medium text-blue-600">
+                {TABLE_CONFIG.ICON} Mesa {guest.tableNumber}
+              </span>
+            </div>
+          </div>
+        )}
 
         {/* Teléfono */}
         {guest.phone && (

@@ -8,6 +8,7 @@ export interface FormData {
   personalMessage: string;
   numberOfGuests: string;
   whatsappNumber: string;
+  tableNumber: string; // 🆕 NUEVO CAMPO - Número de mesa opcional
 }
 
 export type FormField = keyof FormData;

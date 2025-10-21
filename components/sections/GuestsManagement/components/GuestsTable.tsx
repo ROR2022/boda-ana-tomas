@@ -1,6 +1,6 @@
 import React from 'react';
 import { Phone, Calendar, Users, Edit, Trash2, Eye, CheckCircle, Clock, Send } from 'lucide-react';
-import { Guest, STATUS_COLORS } from '../types/guests.types';
+import { Guest, STATUS_COLORS, TABLE_CONFIG } from '../types/guests.types';
 import {
   Table,
   TableBody,
@@ -94,6 +94,7 @@ const GuestsTable: React.FC<GuestsTableProps> = ({
             <TableHead className="text-purple-800 font-bold">Nombre</TableHead>
             <TableHead className="text-purple-800 font-bold">Estado</TableHead>
             <TableHead className="text-purple-800 font-bold">Relación</TableHead>
+            <TableHead className="text-purple-800 font-bold">Mesa</TableHead>
             <TableHead className="text-purple-800 font-bold">Teléfono</TableHead>
             <TableHead className="text-purple-800 font-bold">Invitados</TableHead>
             <TableHead className="text-purple-800 font-bold">Fecha Inv.</TableHead>
@@ -148,6 +149,19 @@ const GuestsTable: React.FC<GuestsTableProps> = ({
                   >
                     {getRelationText(guest.relation)}
                   </span>
+                </TableCell>
+
+                {/* Número de Mesa */}
+                <TableCell>
+                  {guest.tableNumber ? (
+                    <div className="flex items-center gap-2 text-blue-600">
+                      <span className="text-sm font-medium">
+                        {TABLE_CONFIG.ICON} Mesa {guest.tableNumber}
+                      </span>
+                    </div>
+                  ) : (
+                    <span className="text-slate-400 text-sm">Sin asignar</span>
+                  )}
                 </TableCell>
 
                 {/* Teléfono */}

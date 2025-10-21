@@ -68,6 +68,14 @@ export const DOWNLOAD_CONFIG = {
   FILE_PREFIX: "invitacion_"
 } as const;
 
+export const TABLE_CONFIG = {
+  MIN_TABLE: 1,
+  MAX_TABLE: 20,
+  SHOW_TABLE_FIELD: true,
+  DEFAULT_LABEL: "Sin mesa asignada",
+  ICON: "🪑"
+} as const;
+
 export const CSS_CLASSES = {
   GRADIENT_PRIMARY: "bg-gradient-to-r from-purple-700 via-fuchsia-500 to-purple-700",
   GRADIENT_SECONDARY: "bg-gradient-to-r from-fuchsia-500 to-purple-700",

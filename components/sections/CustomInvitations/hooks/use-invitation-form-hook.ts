@@ -19,6 +19,7 @@ const initialFormData: FormData = {
   personalMessage: "",
   numberOfGuests: "",
   whatsappNumber: "",
+  tableNumber: "", // 🆕 NUEVO CAMPO - Mesa opcional
 };
 
 const initialAuthState: AuthState = {

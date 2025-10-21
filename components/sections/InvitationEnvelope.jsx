@@ -35,7 +35,7 @@ function EnvelopeContent({ onOpen }) {
       const response = await fetch(`/api/guests/${id}`);
       if (response.ok) {
         const data = await response.json();
-        //console.log("Guest data:", data);
+        console.log("Guest data:", data);
         if (data) {
           const dataGuest= data.data;
           const { personalInvitation } = dataGuest;
@@ -43,6 +43,7 @@ function EnvelopeContent({ onOpen }) {
             name: dataGuest.name,
             message: personalInvitation.message,
             guestCount: dataGuest.guestCount || 1,
+            tableNumber: dataGuest.tableNumber || null,
           });
         }
       } else {
@@ -70,6 +71,9 @@ function EnvelopeContent({ onOpen }) {
           <h5>{inviteData? "Invitación Para: " : ""}</h5>
           <div className="mt-2 text-2xl font-semibold">{inviteData ? inviteData.name : ""}</div>
           <div>{inviteData? `${inviteData.guestCount} Personas`:""}</div>
+          {inviteData && inviteData.tableNumber ? (
+            <div>Mesa No. {inviteData.tableNumber}</div>
+          ) : null}
           <div className="mt-2 text-lg">{event.date.full}</div>
           <div className="mt-1 text-sm italic px-8 text-center">
             {inviteData ? inviteData.message : ""}

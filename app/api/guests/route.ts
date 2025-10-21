@@ -108,7 +108,7 @@ export async function POST(request: NextRequest) {
     await connectDB();
     
     const body = await request.json();
-    const { name, phone, relation, personalInvitation, attendance } = body;
+    const { name, phone, relation, tableNumber, personalInvitation, attendance } = body;
     
     // Validaciones básicas mejoradas
     if (!name || !name.trim()) {
@@ -208,6 +208,7 @@ export async function POST(request: NextRequest) {
       name: string;
       relation: string;
       phone: string;  // Ahora siempre presente y normalizado
+      tableNumber?: number;  // 🆕 Mesa opcional
       personalInvitation?: unknown;
       attendance?: unknown;
     } = {
@@ -216,10 +217,17 @@ export async function POST(request: NextRequest) {
       phone: cleanPhone  // Guardar teléfono normalizado (solo números)
     };
     
+    // 🆕 Agregar número de mesa si se proporciona
+    if (tableNumber && typeof tableNumber === 'number' && tableNumber > 0) {
+      guestData.tableNumber = tableNumber;
+    }
+    
     console.log('💾 API: Preparando datos del invitado', {
       name: guestData.name,
       phone: guestData.phone,
       relation: guestData.relation,
+      tableNumber: guestData.tableNumber,
+      hasTable: !!guestData.tableNumber,
       hasPersonalInvitation: !!personalInvitation,
       hasAttendance: !!attendance
     });

@@ -6,6 +6,7 @@ export interface IGuest extends Document {
   name: string;
   phone?: string;
   relation: 'familia' | 'amigos' | 'escuela' | 'trabajo' | 'otros';
+  tableNumber?: number;  // 🆕 NUEVO CAMPO - Número de mesa opcional
   
   // Invitación personalizada (opcional)
   personalInvitation?: {
@@ -77,6 +78,19 @@ const GuestSchema = new Schema<IGuest>({
     },
     required: [true, 'La relación es obligatoria'],
     default: 'otros'
+  },
+  
+  // 🆕 NUEVO CAMPO - Número de mesa opcional
+  tableNumber: {
+    type: Number,
+    min: [1, 'El número de mesa debe ser mayor a 0'],
+    max: [50, 'El número de mesa no puede exceder 50'],
+    validate: {
+      validator: function(v: number) {
+        return !v || (Number.isInteger(v) && v > 0);
+      },
+      message: 'El número de mesa debe ser un entero positivo'
+    }
   },
   
   // Invitación personalizada (opcional)

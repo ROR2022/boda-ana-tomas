@@ -8,7 +8,8 @@ import {
   SUGGESTED_MESSAGES, 
   RELATION_OPTIONS, 
   PHONE_CONFIG, 
-  CSS_CLASSES 
+  CSS_CLASSES,
+  TABLE_CONFIG // 🆕 Configuración de mesas
 } from '../constants/invitation.constants';
 import { formatMexicanPhone } from '../utils/invitation.utils';
 
@@ -106,6 +107,32 @@ export const InvitationForm: React.FC<InvitationFormProps> = ({
               </option>
             ))}
           </select>
+        </div>
+
+        {/* Número de Mesa */}
+        <div>
+          <label 
+            htmlFor="tableNumber"
+            className="block text-sm font-medium text-purple-700 mb-2"
+          >
+            {TABLE_CONFIG.ICON} Número de Mesa
+          </label>
+          <select
+            id="tableNumber"
+            value={formData.tableNumber}
+            onChange={(e) => onUpdateFormData("tableNumber", e.target.value)}
+            className={`w-full text-black px-4 py-3 border rounded-lg ${CSS_CLASSES.BORDER_FOCUS}`}
+          >
+            <option value="">{TABLE_CONFIG.DEFAULT_LABEL}</option>
+            {[...Array(TABLE_CONFIG.MAX_TABLE)].map((_, i) => (
+              <option key={i + 1} value={String(i + 1)}>
+                Mesa {i + 1}
+              </option>
+            ))}
+          </select>
+          <div className="mt-1 text-xs text-gray-500">
+            Campo opcional - Solo si tienes mesa asignada
+          </div>
         </div>
 
         {/* Número de invitados */}

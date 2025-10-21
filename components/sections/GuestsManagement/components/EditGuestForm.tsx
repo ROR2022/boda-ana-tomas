@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Edit, User, Phone, Users } from 'lucide-react';
-import { Guest, GuestFormData, RELATION_OPTIONS } from '../types/guests.types';
+import { Guest, GuestFormData, RELATION_OPTIONS, TABLE_CONFIG } from '../types/guests.types';
 
 interface EditGuestFormProps {
   isOpen: boolean;
@@ -20,7 +20,8 @@ const EditGuestForm: React.FC<EditGuestFormProps> = ({
   const [formData, setFormData] = useState<GuestFormData>({
     name: '',
     phone: '',
-    relation: 'familia'
+    relation: 'familia',
+    tableNumber: undefined // 🆕 NUEVO CAMPO
   });
   const [errors, setErrors] = useState<Partial<GuestFormData>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -32,7 +33,8 @@ const EditGuestForm: React.FC<EditGuestFormProps> = ({
       const initialData = {
         name: guest.name,
         phone: guest.phone || '',
-        relation: guest.relation
+        relation: guest.relation,
+        tableNumber: guest.tableNumber || undefined // 🆕 INCLUIR MESA
       };
       setFormData(initialData);
       setErrors({});
@@ -42,7 +44,17 @@ const EditGuestForm: React.FC<EditGuestFormProps> = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    
+    // Manejar tableNumber específicamente
+    if (name === 'tableNumber') {
+      setFormData(prev => ({ 
+        ...prev, 
+        tableNumber: value ? parseInt(value) : undefined 
+      }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
+    
     setHasChanges(true);
     
     // Limpiar error del campo al escribir
@@ -308,6 +320,46 @@ const EditGuestForm: React.FC<EditGuestFormProps> = ({
                   ))}
                 </select>
               </div>
+            </div>
+
+            {/* Campo Número de Mesa */}
+            <div>
+              <label 
+                className="block text-sm font-medium mb-2"
+                style={{ color: 'var(--color-aurora-oro)' }}
+              >
+                {TABLE_CONFIG.ICON} Número de Mesa (opcional)
+              </label>
+              <select
+                name="tableNumber"
+                value={formData.tableNumber || ''}
+                onChange={handleInputChange}
+                disabled={isSubmitting}
+                className="w-full px-4 py-3 rounded-xl border-2 transition-all duration-300 focus:outline-none disabled:opacity-50"
+                style={{
+                  background: 'rgba(253, 252, 252, 0.8)',
+                  borderColor: 'rgba(255, 242, 204, 0.4)',
+                  color: 'var(--color-aurora-oro)'
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = 'var(--color-aurora-oro)';
+                  e.target.style.boxShadow = '0 0 20px rgba(255, 242, 204, 0.4)';
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = 'rgba(255, 242, 204, 0.4)';
+                  e.target.style.boxShadow = 'none';
+                }}
+              >
+                <option value="">{TABLE_CONFIG.DEFAULT_LABEL}</option>
+                {[...Array(TABLE_CONFIG.MAX_TABLE)].map((_, i) => (
+                  <option key={i + 1} value={i + 1}>
+                    Mesa {i + 1}
+                  </option>
+                ))}
+              </select>
+              <p className="mt-1 text-xs opacity-70" style={{ color: 'var(--color-aurora-oro)' }}>
+                Campo opcional - Solo si tienes mesa asignada
+              </p>
             </div>
 
             {/* Indicador de cambios */}
