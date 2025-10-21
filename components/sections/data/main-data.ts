@@ -335,7 +335,7 @@ export const quinceMainData = {
   },
   customInvitations: {
     adminPassword: "admin1234",
-    invitationUrl: "https://boda-vip-new-demo.vercel.app/",
+    invitationUrl: "https://boda-ana-tomas.vercel.app/",
     suggested_messages: [
       "¡Querida amiga! Te invitamos a celebrar con nosotros el día más mágico de nuestra vida. ¡Espero verte brillar junto a nosotros!",
       "¡Familia querida! Este día especial no sería lo mismo sin ustedes. ¡Los esperamos con mucho amor!",
