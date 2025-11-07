@@ -154,7 +154,7 @@ export const STATUS_COLORS = {
 export const TABLE_CONFIG = {
   MIN_TABLE: 1,
   MAX_TABLE: 20,
-  ICON: '🪑',
+  ICON: '💎',
   DEFAULT_LABEL: "Sin mesa asignada",
   SHOW_IN_CARDS: true,
   SHOW_IN_TABLE: true

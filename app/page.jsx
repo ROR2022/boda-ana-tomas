@@ -25,7 +25,7 @@ import { QRCode } from "@/components/sections/QRCode"
 import VideoElement from "@/components/sections/VideoElement"
 
 export default function WeddingInvitation() {
-  const [isOpenInvitation, setIsOpenInvitation] = useState(false);
+  /* const [isOpenInvitation, setIsOpenInvitation] = useState(false);
   const [isWelcomeMessageVisible, setIsWelcomeMessageVisible] = useState(false);
 
   const handleOpenInvitation = () => {
@@ -45,7 +45,7 @@ export default function WeddingInvitation() {
 
    if (isWelcomeMessageVisible) {
     return <WelcomeMessage onContinue={handleContinue} />
-  } 
+  } */ 
 
   return (
     <div 
@@ -53,33 +53,25 @@ export default function WeddingInvitation() {
       background: 'linear-gradient(135deg, #f7e6e6, #e3aaaa)',
     }}
     className="min-h-screen">
-      {/* <Navigation /> */}
-      {/* <DecorationElement /> */}
-      <HeroSection />
+      
+      {/* <HeroSection />
        <ParentsSection />
       <DateSection />
       <CeremonySection />
-      {/* <ReceptionSection /> */}
+      
       <TimelineSection />
       <DressCodeSection />
        <AttendanceConfirmation />
       <GiftsSection />
-      {/* <GallerySection /> */}
+      
       <PremiumGallery />
       <VideoElement />
-      {/* <QRCode /> */}
-      {/* <CustomInvitations /> */}
-      <Link 
-      style={{display: 'none'}}
-      href="/custom-invite" target="_blank" className="flex justify-center my-8">
-        <button className="px-6 py-3 bg-pink-800 text-white rounded-full shadow-lg hover:bg-pink-400 transition">
-          Personaliza tu invitación
-        </button>
-      </Link>
-      <BasicCTA />
+      */}
+      
+      <BasicCTA /> 
       
       {/* 🎵 Reproductor de audio fijo */}
-      <AudioPlayer />
+      {/* <AudioPlayer /> */}
     </div>
   )
 }

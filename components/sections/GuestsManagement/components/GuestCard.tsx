@@ -137,11 +137,11 @@ const GuestCard: React.FC<GuestCardProps> = ({
         {guest.tableNumber && (
           <div className="flex items-center gap-3">
             <div 
-              className="p-1 rounded-md"
+              className="p-1 rounded-md animate-vip-pulse-aurora"
               style={{ backgroundColor: 'rgba(59, 130, 246, 0.1)' }}
             >
-              <span className="text-xs font-medium text-blue-600">
-                {TABLE_CONFIG.ICON} Mesa {guest.tableNumber}
+              <span className="text-xs font-medium text-blue-600 animate-vip-shimmer-aurora">
+                <span className="inline-block animate-vip-float-aurora">{TABLE_CONFIG.ICON}</span> Mesa {guest.tableNumber}
               </span>
             </div>
           </div>
